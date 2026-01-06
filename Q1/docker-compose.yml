@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    image: talhamemon12/api-gateway
+    build: ./api-gateway
+    ports:
+      - "4000:4000"
+    depends_on:
+      - auth-service
+      - patient-service
+      - doctor-service
+      - appointment-service
+
+  auth-service:
+    image: talhamemon12/auth-service
+    build: ./auth-service
+    ports:
+      - "4001:4001"
+
+  patient-service:
+    image: talhamemon12/patient-service
+    build: ./patient-service
+    ports:
+      - "4002:4002"
+
+  doctor-service:
+    image: talhamemon12/doctor-service
+    build: ./doctor-service
+    ports:
+      - "4003:4003"
+
+  appointment-service:
+    image: talhamemon12/appointment-service
+    build: ./appointment-service
+    ports:
+      - "4004:4004"
+    depends_on:
+      - notification-service
+
+  notification-service:
+    image: talhamemon12/notification-service
+    build: ./notification-service
+    ports:
+      - "4005:4005"
