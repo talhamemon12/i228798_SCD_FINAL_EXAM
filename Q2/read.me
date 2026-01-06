@@ -1,0 +1,262 @@
+now automate building and delivery process using github actions this includes creating workflowfiles that automatically build docker images for each service whenever changes are pushed to main the workflow should handle tasks such as checking out the source, setting up the build enviromnment building container images and pushing images to container registry
+
+talhamemon12: in q1 folder there are services api-gateway, appointent-sevice, auth service, docter service and notification service and patient service we have to deploy all these as independent services using docker compose and each service should have their image
+
+GitHub Copilot: Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/api-gateway/package.json)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/api-gateway/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/auth-service/package.json)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/auth-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/patient-service/package.json)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/patient-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/doctor-service/package.json)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/doctor-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/appointment-service/package.json)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/appointment-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/notification-service/package.json)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/notification-service/server.js)
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/api-gateway/Dockerfile)
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/auth-service/Dockerfile)
+
+Made changes.
+
+talhamemon12: complete the project
+
+GitHub Copilot: Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/api-gateway/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/auth-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/patient-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/doctor-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/appointment-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/notification-service/server.js)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/api-gateway/Dockerfile)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/auth-service/Dockerfile)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/api-gateway/package.json)
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/appointment-service/Dockerfile)
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/doctor-service/Dockerfile)
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/notification-service/Dockerfile)
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/patient-service/Dockerfile)
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/docker-compose.yml)
+
+Read [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1/appointment-service/package.json)
+
+Ran terminal command: cd /home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1 && docker-compose build
+
+Made changes.
+
+talhamemon12: how to start and test every service
+
+GitHub Copilot: To start all the services in the Q1 folder using Docker Compose, navigate to the Q1 directory and run the following command. This will build the images (if not already built) and start all services in the background:
+
+```
+cd /home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1
+docker-compose up -d
+```
+
+To check if the services are running, you can use:
+
+```
+docker-compose ps
+```
+
+This should show all services as "Up".
+
+To test each service individually, you can use `curl` commands to hit their health endpoints and other endpoints. Assuming the services are running on the exposed ports, here are the tests:
+
+1. **API Gateway** (port 4000):
+   - Health check: `curl http://localhost:4000/health`
+   - Expected: "Gateway OK"
+
+2. **Auth Service** (port 4001):
+   - Health check: `curl http://localhost:4001/health`
+   - Register a user: `curl -X POST http://localhost:4001/register -H "Content-Type: application/json" -d '{"email":"test@example.com","password":"pass","role":"patient"}'`
+   - Login: `curl -X POST http://localhost:4001/login -H "Content-Type: application/json" -d '{"email":"test@example.com"}'`
+   - Expected health: "Auth OK"
+
+3. **Patient Service** (port 4002):
+   - Health check: `curl http://localhost:4002/health`
+   - Get users: `curl http://localhost:4002/users`
+   - Add user: `curl -X POST http://localhost:4002/users -H "Content-Type: application/json" -d '{"id":3,"name":"John","age":28}'`
+   - Expected health: "User OK"
+
+4. **Doctor Service** (port 4003):
+   - Health check: `curl http://localhost:4003/health`
+   - Get doctors: `curl http://localhost:4003/doctors`
+   - Update availability: `curl -X PUT http://localhost:4003/doctors/1/availability -H "Content-Type: application/json" -d '{"available":false}'`
+   - Expected health: "Doctor OK"
+
+5. **Appointment Service** (port 4004):
+   - Health check: `curl http://localhost:4004/health`
+   - Get appointments: `curl http://localhost:4004/appointments`
+   - Book appointment: `curl -X POST http://localhost:4004/appointments -H "Content-Type: application/json" -d '{"userId":1,"doctorId":1,"date":"2023-10-01"}'`
+   - Expected health: "Appointment OK"
+
+6. **Notification Service** (port 4005):
+   - Health check: `curl http://localhost:4005/health`
+   - Send notification: `curl -X POST http://localhost:4005/notify -H "Content-Type: application/json" -d '{"message":"Test notification"}'`
+   - Expected health: "Notification OK"
+
+You can also test the API Gateway by accessing the services through it, e.g., `curl http://localhost:4000/auth/health` should proxy to auth-service.
+
+To stop the services, run:
+
+```
+docker-compose down
+```
+
+If you encounter any issues, check the logs with `docker-compose logs <service-name>`.
+
+talhamemon12: give me complete commands to push all serivices into docker hub talhamemon12 is my docker hub user name 
+
+GitHub Copilot: Using "Replace String in File"
+
+
+```
+
+```
+To push all the service images to your Docker Hub account (username: `talhamemon12`), follow these steps. This assumes you have Docker installed and are logged in to Docker Hub. If not, run `docker login` first and enter your credentials.
+
+1. Navigate to the Q1 directory:
+   ```
+   cd /home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1
+   ```
+
+2. Build the images (this will tag them with your Docker Hub username as specified in the updated `docker-compose.yml`):
+   ```
+   docker-compose build
+   ```
+
+3. Push all the images to Docker Hub:
+   ```
+   docker-compose push
+   ```
+
+This will push the following images:
+- `talhamemon12/api-gateway`
+- `talhamemon12/auth-service`
+- `talhamemon12/patient-service`
+- `talhamemon12/doctor-service`
+- `talhamemon12/appointment-service`
+- `talhamemon12/notification-service`
+
+After pushing, you can verify on Docker Hub that the repositories are created under your account. If you encounter authentication issues, ensure you're logged in with `docker login`.
+
+Made changes.
+
+talhamemon12: without doceer compose
+
+GitHub Copilot: To push the service images to Docker Hub without using Docker Compose, you need to build and tag each image individually, then push them. Ensure you're logged in to Docker Hub first with `docker login` (enter your username `talhamemon12` and password when prompted).
+
+Navigate to the Q1 directory:
+
+```
+cd /home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/Q1
+```
+
+Then, run the following commands for each service:
+
+1. **API Gateway**:
+   ```
+   docker build -t talhamemon12/api-gateway ./api-gateway
+   docker push talhamemon12/api-gateway
+   ```
+
+2. **Auth Service**:
+   ```
+   docker build -t talhamemon12/auth-service ./auth-service
+   docker push talhamemon12/auth-service
+   ```
+
+3. **Patient Service**:
+   ```
+   docker build -t talhamemon12/patient-service ./patient-service
+   docker push talhamemon12/patient-service
+   ```
+
+4. **Doctor Service**:
+   ```
+   docker build -t talhamemon12/doctor-service ./doctor-service
+   docker push talhamemon12/doctor-service
+   ```
+
+5. **Appointment Service**:
+   ```
+   docker build -t talhamemon12/appointment-service ./appointment-service
+   docker push talhamemon12/appointment-service
+   ```
+
+6. **Notification Service**:
+   ```
+   docker build -t talhamemon12/notification-service ./notification-service
+   docker push talhamemon12/notification-service
+   ```
+
+After running these, all images will be pushed to your Docker Hub account under the repositories listed. If you encounter errors (e.g., authentication issues), double-check your login or network connection.
+
+talhamemon12: now automate building and delivery process using github actions this includes creating workflowfiles that automatically build docker images for each service whenever changes are pushed to main the workflow should handle tasks such as checking out the source, setting up the build enviromnment building container images and pushing images to container registry
+
+GitHub Copilot: Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/.github)
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/.github/workflows)
+
+Created [](file:///home/muhammad-talha/Music/i228798_SCD_FINAL_EXAM/.github/workflows/build-and-push.yml)
+
+I've created a GitHub Actions workflow file at build-and-push.yml that automates building and pushing Docker images for each service whenever changes are pushed to the `main` branch. The workflow handles:
+
+- Checking out the source code
+- Setting up the build environment (using Ubuntu runners)
+- Logging in to Docker Hub
+- Building and pushing each service's Docker image
+
+### Key Details:
+- **Trigger**: Runs on pushes to the `main` branch.
+- **Services Covered**: All six services (api-gateway, auth-service, patient-service, doctor-service, appointment-service, notification-service).
+- **Registry**: Pushes to Docker Hub under your username `talhamemon12`.
+
+### Setup Required:
+1. In your GitHub repository (`talhamemon12/i228798_SCD_FINAL_EXAM`), go to **Settings > Secrets and variables > Actions**.
+2. Add the following secrets:
+   - `DOCKER_USERNAME`: Set to `talhamemon12`
+   - `DOCKER_PASSWORD`: Set to your Docker Hub password or access token.
+
+### How It Works:
+- On each push to `main`, the workflow will run sequentially for each service, building the image from the respective Dockerfile and pushing it to Docker Hub.
+- If a build fails for any service, the workflow will stop, but you can check the logs in the Actions tab.
+
+To test, commit and push this new file to the `main` branch. The workflow should trigger automatically. If you need to trigger it manually or modify it (e.g., for parallel builds), let me know.
+
+Made changes.g
