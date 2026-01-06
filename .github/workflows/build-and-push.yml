@@ -1,0 +1,56 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push API Gateway
+        run: |
+          cd Q1/api-gateway
+          docker build -t talhamemon12/api-gateway .
+          docker push talhamemon12/api-gateway
+
+      - name: Build and Push Auth Service
+        run: |
+          cd Q1/auth-service
+          docker build -t talhamemon12/auth-service .
+          docker push talhamemon12/auth-service
+
+      - name: Build and Push Patient Service
+        run: |
+          cd Q1/patient-service
+          docker build -t talhamemon12/patient-service .
+          docker push talhamemon12/patient-service
+
+      - name: Build and Push Doctor Service
+        run: |
+          cd Q1/doctor-service
+          docker build -t talhamemon12/doctor-service .
+          docker push talhamemon12/doctor-service
+
+      - name: Build and Push Appointment Service
+        run: |
+          cd Q1/appointment-service
+          docker build -t talhamemon12/appointment-service .
+          docker push talhamemon12/appointment-service
+
+      - name: Build and Push Notification Service
+        run: |
+          cd Q1/notification-service
+          docker build -t talhamemon12/notification-service .
+          docker push talhamemon12/notification-service
